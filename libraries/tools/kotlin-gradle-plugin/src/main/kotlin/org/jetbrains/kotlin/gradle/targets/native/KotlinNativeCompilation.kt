@@ -13,8 +13,10 @@ import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.FileCollection
 import org.gradle.api.file.SourceDirectorySet
+import org.gradle.api.tasks.TaskProvider
 import org.gradle.util.ConfigureUtil
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonOptions
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilationWithResources
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
@@ -42,6 +44,10 @@ abstract class AbstractKotlinNativeCompilation(
         get() = super.compileKotlinTask as KotlinNativeCompile
 
     // A collection containing all source sets used by this compilation
+    @Suppress("UNCHECKED_CAST")
+    override val compileKotlinTaskProvider: TaskProvider<out KotlinNativeCompile>
+        get() = super.compileKotlinTaskProvider as TaskProvider<out KotlinNativeCompile>
+
     // (taking into account dependencies between source sets). Used by both compilation
     // and linking tasks. Unlike kotlinSourceSets, includes dependency source sets.
     // TODO: Move into the compilation task when the linking task does klib linking instead of compilation.

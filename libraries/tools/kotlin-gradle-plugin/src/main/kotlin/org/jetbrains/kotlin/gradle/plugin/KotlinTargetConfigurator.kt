@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.gradle.plugin
 
+import org.gradle.api.DefaultTask
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -21,6 +22,7 @@ import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.plugins.ExtensionAware
 import org.gradle.api.plugins.JavaBasePlugin
 import org.gradle.api.tasks.Delete
+import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.bundling.Jar
 import org.gradle.api.tasks.bundling.Zip
 import org.gradle.language.base.plugins.LifecycleBasePlugin
@@ -31,6 +33,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.*
 import org.jetbrains.kotlin.gradle.targets.js.KotlinJsCompilerAttribute
 import org.jetbrains.kotlin.gradle.targets.js.KotlinJsTarget
 import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrTarget
+import org.jetbrains.kotlin.gradle.tasks.registerTask
 import org.jetbrains.kotlin.gradle.utils.COMPILE
 import org.jetbrains.kotlin.gradle.utils.RUNTIME
 import org.jetbrains.kotlin.gradle.utils.lowerCamelCaseName
@@ -136,12 +139,12 @@ abstract class AbstractKotlinTargetConfigurator<KotlinTargetType : KotlinTarget>
 
         compilation.output.classesDirs.from(project.files().builtBy(compilation.compileAllTaskName))
 
-        project.tasks.create(compilation.compileAllTaskName).apply {
-            group = LifecycleBasePlugin.BUILD_GROUP
-            description = "Assembles outputs for compilation '${compilation.name}' of target '${compilation.target.name}'"
-            dependsOn(compilation.compileKotlinTaskName)
+        project.registerTask<DefaultTask>(compilation.compileAllTaskName) {
+            it.group = LifecycleBasePlugin.BUILD_GROUP
+            it.description = "Assembles outputs for compilation '${compilation.name}' of target '${compilation.target.name}'"
+            it.dependsOn(compilation.compileKotlinTaskName)
             if (compilation is KotlinCompilationWithResources) {
-                dependsOn(compilation.processResourcesTaskName)
+                it.dependsOn(compilation.processResourcesTaskName)
             }
         }
     }
@@ -359,12 +362,12 @@ abstract class KotlinOnlyTargetConfigurator<KotlinCompilationType : KotlinCompil
     }
 
     /** The implementations are expected to create a [Zip] task under the name [KotlinTarget.artifactsTaskName] of the [target]. */
-    protected open fun createArchiveTasks(target: KotlinTargetType): Zip {
+    protected open fun createArchiveTasks(target: KotlinTargetType): TaskProvider<out Zip> {
         //TODO Change Jar on Zip
-        return target.project.tasks.create(target.artifactsTaskName, Jar::class.java).apply {
-            description = "Assembles an archive containing the main classes."
-            group = BasePlugin.BUILD_GROUP
-            from(target.compilations.getByName(KotlinCompilation.MAIN_COMPILATION_NAME).output.allOutputs)
+        return target.project.registerTask<Jar>(target.artifactsTaskName) {
+            it.description = "Assembles an archive containing the main classes."
+            it.group = BasePlugin.BUILD_GROUP
+            it.from(target.compilations.getByName(KotlinCompilation.MAIN_COMPILATION_NAME).output.allOutputs)
         }
     }
 
@@ -375,7 +378,11 @@ abstract class KotlinOnlyTargetConfigurator<KotlinCompilationType : KotlinCompil
 
         val task = createArchiveTasks(target)
 
-        target.disambiguationClassifier?.let { task.appendix = it.toLowerCase() }
+        target.disambiguationClassifier?.let { classifier ->
+            task.configure { taskInstance ->
+                taskInstance.archiveAppendix.set(classifier.toLowerCase())
+            }
+        }
 
         // Workaround: adding the artifact during configuration seems to interfere with the Java plugin, which results into missing
         // task dependency 'assemble -> jar' if the Java plugin is applied after this steps

@@ -39,7 +39,7 @@ internal fun <T : Task> registerTask(project: Project, name: String, type: Class
 internal inline fun <reified T : Task> Project.registerTask(
     name: String,
     args: List<Any> = emptyList(),
-    noinline body: (T) -> (Unit)
+    noinline body: ((T) -> (Unit))? = null
 ): TaskProvider<T> =
     this@registerTask.registerTask(name, T::class.java, args, body)
 
@@ -47,9 +47,13 @@ internal fun <T : Task> Project.registerTask(
     name: String,
     type: Class<T>,
     constructorArgs: List<Any> = emptyList(),
-    body: (T) -> (Unit)
+    body: ((T) -> (Unit))? = null
 ): TaskProvider<T> {
-    return project.tasks.register(name, type, *constructorArgs.toTypedArray()).apply { configure(body) }
+    val resultProvider = project.tasks.register(name, type, *constructorArgs.toTypedArray())
+    if (body != null) {
+        resultProvider.configure(body)
+    }
+    return resultProvider
 }
 
 

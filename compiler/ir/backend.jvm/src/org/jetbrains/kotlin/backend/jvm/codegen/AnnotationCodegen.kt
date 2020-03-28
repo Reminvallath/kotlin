@@ -33,14 +33,10 @@ import org.jetbrains.kotlin.descriptors.annotations.KotlinTarget
 import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.expressions.*
 import org.jetbrains.kotlin.ir.types.*
-import org.jetbrains.kotlin.ir.types.impl.originalKotlinType
 import org.jetbrains.kotlin.ir.util.*
-import org.jetbrains.kotlin.load.kotlin.FileBasedKotlinClass
-import org.jetbrains.kotlin.load.kotlin.KotlinJvmBinarySourceElement
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.checkers.ExpectedActualDeclarationChecker
-import org.jetbrains.kotlin.serialization.deserialization.descriptors.DeserializedClassDescriptor
 import org.jetbrains.kotlin.synthetic.isVisibleOutside
 import org.jetbrains.kotlin.types.TypeSystemCommonBackendContext
 import org.jetbrains.kotlin.types.isNullabilityFlexible
@@ -183,7 +179,7 @@ abstract class AnnotationCodegen(
         // We do not generate annotations whose classes are optional (annotated with `@OptionalExpectation`) because if an annotation entry
         // is resolved to the expected declaration, this means that annotation has no actual class, and thus should not be generated.
         // (Otherwise we would've resolved the entry to the actual annotation class.)
-        if (ExpectedActualDeclarationChecker.isOptionalAnnotationClass(annotationClass.descriptor)) {
+        if (ExpectedActualDeclarationChecker.isOptionalAnnotationClass(annotationClass.symbol.trueDescriptor)) {
             return null
         }
 
@@ -335,7 +331,7 @@ abstract class AnnotationCodegen(
                 // Those are type annotations which were compiled with JVM target bytecode version 1.8 or greater
                 (it.annotationClass.origin != IrDeclarationOrigin.IR_EXTERNAL_DECLARATION_STUB &&
                         it.annotationClass.origin != IrDeclarationOrigin.IR_EXTERNAL_JAVA_DECLARATION_STUB) ||
-                        isCompiledToJvm8OrHigher(it.annotationClass.descriptor)
+                        isCompiledToJvm8OrHigher(it.annotationClass.symbol.trueDescriptor)
             }
         }
     }

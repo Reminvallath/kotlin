@@ -32,6 +32,7 @@ import org.jetbrains.kotlin.ir.symbols.impl.*
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.resolve.descriptorUtil.isEffectivelyExternal
 import org.jetbrains.kotlin.serialization.deserialization.descriptors.DescriptorWithContainerSource
+import org.jetbrains.kotlin.utils.addToStdlib.safeAs
 
 interface IrProvider {
     fun getDeclaration(symbol: IrSymbol): IrDeclaration?
@@ -151,13 +152,15 @@ open class SymbolTable(
             assert(d0 === d) {
                 "Non-original descriptor in declaration: $d\n\tExpected: $d0"
             }
-            val s = get(d0)
+            val d1: D = (d0 as? WrappedDeclarationDescriptor<*>)?.owner?.safeAs<IrSymbolOwner>()?.symbol?.trueDescriptor as? D
+                ?: d0
+            val s = get(d1)
             if (s == null) {
                 val new = orElse()
                 assert(unboundSymbols.add(new)) {
                     "Symbol for $new was already referenced"
                 }
-                set(d0, new)
+                set(d1, new)
                 return new
             }
             return s
@@ -534,9 +537,9 @@ open class SymbolTable(
                 type = type,
                 descriptor = descriptor,
                 symbol = it,
-                visibility = visibility ?: it.descriptor.visibility,
+                visibility = visibility ?: it.trueDescriptor.visibility,
             ).apply {
-                metadata = MetadataSource.Property(it.descriptor)
+                metadata = MetadataSource.Property(descriptor)
             }
         }
     ): IrField =
@@ -607,7 +610,7 @@ open class SymbolTable(
                 isExternal = descriptor.isEffectivelyExternal(),
                 isExpect = descriptor.isExpect
             ).apply {
-                metadata = MetadataSource.Property(symbol.descriptor)
+                metadata = MetadataSource.Property(descriptor)
             }
         }
     ): IrProperty =
@@ -807,7 +810,7 @@ open class SymbolTable(
         )
 
     fun introduceValueParameter(irValueParameter: IrValueParameter) {
-        valueParameterSymbolTable.introduceLocal(irValueParameter.descriptor, irValueParameter.symbol)
+        valueParameterSymbolTable.introduceLocal(irValueParameter.symbol.trueDescriptor, irValueParameter.symbol)
     }
 
     override fun referenceValueParameter(descriptor: ParameterDescriptor) =

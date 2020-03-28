@@ -25,7 +25,7 @@ class IrLazyClass(
     endOffset: Int,
     origin: IrDeclarationOrigin,
     override val symbol: IrClassSymbol,
-    override val descriptor: ClassDescriptor,
+    trueDescriptor: ClassDescriptor,
     override val name: Name,
     override val kind: ClassKind,
     override var visibility: Visibility,
@@ -40,16 +40,18 @@ class IrLazyClass(
     stubGenerator: DeclarationStubGenerator,
     typeTranslator: TypeTranslator
 ) :
-    IrLazyDeclarationBase(startOffset, endOffset, origin, stubGenerator, typeTranslator),
+    IrLazyDeclarationBase(startOffset, endOffset, trueDescriptor, origin, stubGenerator, typeTranslator),
     IrClass {
 
     init {
         symbol.bind(this)
     }
 
+    override val descriptor get() = symbol.descriptor
+
     override var thisReceiver: IrValueParameter? by lazyVar {
         typeTranslator.buildWithScope(this) {
-            descriptor.thisAsReceiverParameter.generateReceiverParameterStub().apply { parent = this@IrLazyClass }
+            trueDescriptor.thisAsReceiverParameter.generateReceiverParameterStub().apply { parent = this@IrLazyClass }
         }
     }
 
@@ -57,9 +59,9 @@ class IrLazyClass(
     override val declarations: MutableList<IrDeclaration> by lazyVar {
         ArrayList<IrDeclaration>().also {
             typeTranslator.buildWithScope(this) {
-                generateChildStubs(descriptor.constructors, it)
-                generateMemberStubs(descriptor.defaultType.memberScope, it)
-                generateMemberStubs(descriptor.staticScope, it)
+                generateChildStubs(trueDescriptor.constructors, it)
+                generateMemberStubs(trueDescriptor.defaultType.memberScope, it)
+                generateMemberStubs(trueDescriptor.staticScope, it)
             }
         }.also {
             it.forEach {
@@ -69,7 +71,7 @@ class IrLazyClass(
     }
 
     override var typeParameters: List<IrTypeParameter> by lazyVar {
-        descriptor.declaredTypeParameters.mapTo(arrayListOf()) {
+        trueDescriptor.declaredTypeParameters.mapTo(arrayListOf()) {
             stubGenerator.generateOrGetTypeParameterStub(it)
         }
     }
@@ -77,7 +79,7 @@ class IrLazyClass(
     override var superTypes: List<IrType> by lazyVar {
         typeTranslator.buildWithScope(this) {
             // TODO get rid of code duplication, see ClassGenerator#generateClass
-            descriptor.typeConstructor.supertypes.mapNotNullTo(arrayListOf()) {
+            trueDescriptor.typeConstructor.supertypes.mapNotNullTo(arrayListOf()) {
                 it.toIrType()
             }
         }

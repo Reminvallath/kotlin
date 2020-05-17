@@ -79,21 +79,23 @@ fun Project.projectTest(
         }
     }
 
-    doFirst {
-        val agent = tasks.findByPath(":test-instrumenter:jar")!!.outputs.files.singleFile
+    if (project.findProperty("kotlin.test.instrumentation.disable")?.toString()?.toBoolean() != true) {
+        doFirst {
+            val agent = tasks.findByPath(":test-instrumenter:jar")!!.outputs.files.singleFile
 
-        val args = project.findProperty("kotlin.test.instrumentation.args")?.let { "=$it" }.orEmpty()
+            val args = project.findProperty("kotlin.test.instrumentation.args")?.let { "=$it" }.orEmpty()
 
-        jvmArgs("-javaagent:$agent$args")
+            jvmArgs("-javaagent:$agent$args")
+        }
+
+        dependsOn(":test-instrumenter:jar")
     }
-
-    dependsOn(":test-instrumenter:jar")
 
     jvmArgs(
         "-ea",
         "-XX:+HeapDumpOnOutOfMemoryError",
         "-XX:+UseCodeCacheFlushing",
-        "-XX:ReservedCodeCacheSize=128m",
+        "-XX:ReservedCodeCacheSize=256m",
         "-Djna.nosys=true"
     )
 
@@ -111,7 +113,7 @@ fun Project.projectTest(
     doFirst {
         val teamcity = rootProject.findProperty("teamcity") as? Map<Any?, *>
         val systemTempRoot =
-            // TC by default doesn't switch `teamcity.build.tempDir` to 'java.io.tmpdir' so it could cause to wasted disk space
+        // TC by default doesn't switch `teamcity.build.tempDir` to 'java.io.tmpdir' so it could cause to wasted disk space
             // Should be fixed soon on Teamcity side
             (teamcity?.get("teamcity.build.tempDir") as? String)
                 ?: System.getProperty("java.io.tmpdir")

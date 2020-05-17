@@ -82,12 +82,8 @@ projectTest(taskName = "performanceTest") {
     jvmArgs?.removeAll { it.startsWith("-Xmx") }
 
     maxHeapSize = "3g"
-    jvmArgs("-Didea.debug.mode=true")
-    jvmArgs("-XX:SoftRefLRUPolicyMSPerMB=50")
     jvmArgs(
-        "-XX:ReservedCodeCacheSize=240m",
-        "-XX:+UseCompressedOops",
-        "-XX:+UseConcMarkSweepGC"
+        "-Didea.ProcessCanceledException=disabled"
     )
 
     System.getenv("YOURKIT_PROFILER_HOME")?.let {yourKitHome ->
@@ -97,7 +93,7 @@ projectTest(taskName = "performanceTest") {
                 classpath += files("$yourKitHome/lib/yjp-controller-api-redist.jar")
             }
             currentOs.isMacOsX -> {
-                jvmArgs("-agentpath:$yourKitHome/Contents/Resources/bin/mac/libyjpagent.dylib")
+                jvmArgs("-agentpath:$yourKitHome/Contents/Resources/bin/mac/libyjpagent.dylib=delay=5000,_socket_timeout_ms=120000,disablealloc,disable_async_sampling,disablenatives")
                 classpath += files("$yourKitHome/Contents/Resources/lib/yjp-controller-api-redist.jar")
             }
         }
@@ -128,12 +124,10 @@ projectTest(taskName = "wholeProjectsPerformanceTest") {
     jvmArgs("-DperformanceProjects=${System.getProperty("performanceProjects")}")
     jvmArgs("-Didea.debug.mode=true")
     jvmArgs("-DemptyProfile=${System.getProperty("emptyProfile")}")
-    jvmArgs("-XX:SoftRefLRUPolicyMSPerMB=50")
-    jvmArgs(
-        "-XX:ReservedCodeCacheSize=240m",
-        "-XX:+UseCompressedOops",
-        "-XX:+UseConcMarkSweepGC"
-    )
+//    jvmArgs("-XX:SoftRefLRUPolicyMSPerMB=50") // to use user's default options
+//    jvmArgs(
+//        "-XX:+UseConcMarkSweepGC" // to use the user's default, CMS is not a default option
+//    )
 
     doFirst {
         systemProperty("idea.home.path", intellijRootDir().canonicalPath)

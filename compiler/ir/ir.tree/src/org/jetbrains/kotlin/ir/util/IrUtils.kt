@@ -234,7 +234,7 @@ val IrBody.statements: List<IrStatement>
 val IrClass.defaultType: IrSimpleType
     get() = this.thisReceiver!!.type as IrSimpleType
 
-val IrSimpleFunction.isSynthesized: Boolean get() = symbol.initialDescriptor.kind == CallableMemberDescriptor.Kind.SYNTHESIZED
+val IrSimpleFunction.isSynthesized: Boolean get() = initialDescriptor.kind == CallableMemberDescriptor.Kind.SYNTHESIZED
 
 fun IrClass.isSubclassOf(ancestor: IrClass): Boolean {
 

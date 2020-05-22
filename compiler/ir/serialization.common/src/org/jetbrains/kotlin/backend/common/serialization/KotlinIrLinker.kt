@@ -497,14 +497,14 @@ abstract class KotlinIrLinker(
     }
 
     private fun findDeserializedDeclarationForSymbol(symbol: IrSymbol): DeclarationDescriptor? {
-        assert(symbol.isPublicApi || symbol.trueDescriptor.module === currentModule || platformSpecificSymbol(symbol))
+        assert(symbol.isPublicApi || symbol.initialDescriptor.module === currentModule || platformSpecificSymbol(symbol))
 
         if (haveSeen.contains(symbol)) {
             return null
         }
         haveSeen.add(symbol)
 
-        val descriptor = symbol.trueDescriptor
+        val descriptor = symbol.initialDescriptor
 
         val moduleDeserializer = resolveModuleDeserializer(descriptor.module)
 
@@ -525,7 +525,7 @@ abstract class KotlinIrLinker(
     override fun getDeclaration(symbol: IrSymbol): IrDeclaration? {
 
         if (!symbol.isPublicApi) {
-            val descriptor = symbol.trueDescriptor
+            val descriptor = symbol.initialDescriptor
             if (descriptor is WrappedDeclarationDescriptor<*>) return null
             if (!platformSpecificSymbol(symbol)) {
                 if (descriptor.module !== currentModule) return null
@@ -543,7 +543,7 @@ abstract class KotlinIrLinker(
         if (!symbol.isBound) return null
 
         //assert(symbol.isBound) {
-        //    "getDeclaration: symbol $symbol is unbound, descriptor = ${symbol.trueDescriptor}, signature = ${symbol.signature}"
+        //    "getDeclaration: symbol $symbol is unbound, descriptor = ${symbol.initialDescriptor}, signature = ${symbol.signature}"
         //}
 
         return symbol.owner as IrDeclaration

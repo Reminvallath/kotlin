@@ -71,7 +71,7 @@ class MethodSignatureMapper(private val context: JvmBackendContext) {
         }
 
         // TODO: remove essential use of descriptors
-        val nameForSpecialFunction = getJvmMethodNameIfSpecial(function.symbol.trueDescriptor)
+        val nameForSpecialFunction = getJvmMethodNameIfSpecial(function.symbol.initialDescriptor)
         if (nameForSpecialFunction != null) return nameForSpecialFunction
 
         val property = (function as? IrSimpleFunction)?.correspondingPropertySymbol?.owner
@@ -114,7 +114,7 @@ class MethodSignatureMapper(private val context: JvmBackendContext) {
     private fun getModuleName(function: IrFunction): String =
         // TODO: get rid of descriptors here
         (if (function is IrLazyFunctionBase)
-            getJvmModuleNameForDeserializedDescriptor(function.symbol.trueDescriptor)
+            getJvmModuleNameForDeserializedDescriptor(function.symbol.initialDescriptor)
         else null) ?: context.state.moduleName
 
     private fun IrFunction.isPublishedApi(): Boolean =
@@ -179,8 +179,8 @@ class MethodSignatureMapper(private val context: JvmBackendContext) {
     private fun mapSignature(function: IrFunction, skipGenericSignature: Boolean): JvmMethodGenericSignature {
         if (function is IrLazyFunctionBase && function.initialSignatureFunction != null) {
             // Overrides of special builtin in Kotlin classes always have special signature
-            if (function.symbol.trueDescriptor.getOverriddenBuiltinReflectingJvmDescriptor() == null ||
-                function.symbol.trueDescriptor.containingDeclaration.original is JavaClassDescriptor
+            if (function.symbol.initialDescriptor.getOverriddenBuiltinReflectingJvmDescriptor() == null ||
+                function.symbol.initialDescriptor.containingDeclaration.original is JavaClassDescriptor
             ) {
                 return mapSignature(function.initialSignatureFunction!!, skipGenericSignature)
             }

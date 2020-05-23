@@ -476,7 +476,7 @@ class Fir2IrDeclarationStorage(
             result
         }.bindAndDeclareParameters(function, descriptor, irParent, thisReceiverOwner, isStatic = simpleFunction?.isStatic == true)
 
-        leaveScope(created.descriptor)
+        leaveScope(created.wrappedDescriptor)
         if (visibility == Visibilities.LOCAL) {
             localStorage.putLocalFunction(function, created)
             return created
@@ -501,7 +501,7 @@ class Fir2IrDeclarationStorage(
         irParent: IrClass
     ): IrAnonymousInitializer {
         return anonymousInitializer.convertWithOffsets { startOffset, endOffset ->
-            symbolTable.declareAnonymousInitializer(startOffset, endOffset, IrDeclarationOrigin.DEFINED, irParent.descriptor).apply {
+            symbolTable.declareAnonymousInitializer(startOffset, endOffset, IrDeclarationOrigin.DEFINED, irParent.wrappedDescriptor).apply {
                 this.parent = irParent
                 initializerCache[anonymousInitializer] = this
             }
@@ -549,7 +549,7 @@ class Fir2IrDeclarationStorage(
         startOffset: Int,
         endOffset: Int
     ): IrSimpleFunction {
-        val propertyDescriptor = correspondingProperty.descriptor
+        val propertyDescriptor = correspondingProperty.wrappedDescriptor
         val descriptor = when {
             propertyDescriptor is WrappedPropertyDescriptorWithContainerSource ->
                 WrappedFunctionDescriptorWithContainerSource(propertyDescriptor.containerSource)

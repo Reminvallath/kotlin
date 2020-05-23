@@ -128,7 +128,7 @@ internal class CallAndReferenceGenerator(
         val receiverVariable = declarationStorage.declareTemporaryVariable(explicitReceiverExpression, "safe_receiver").apply {
             parent = conversionScope.parentFromStack()
         }
-        val variableSymbol = symbolTable.referenceValue(receiverVariable.descriptor)
+        val variableSymbol = symbolTable.referenceValue(receiverVariable.wrappedDescriptor)
 
         val resultType = call.type.makeNullable()
         return IrBlockImpl(startOffset, endOffset, resultType, IrStatementOrigin.SAFE_CALL).apply {

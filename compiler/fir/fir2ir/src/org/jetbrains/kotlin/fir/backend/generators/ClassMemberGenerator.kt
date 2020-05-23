@@ -46,13 +46,13 @@ internal class ClassMemberGenerator(
     private fun <T : IrDeclaration> applyParentFromStackTo(declaration: T): T = conversionScope.applyParentFromStackTo(declaration)
 
     fun convertClassContent(irClass: IrClass, klass: FirClass<*>) {
-        declarationStorage.enterScope(irClass.descriptor)
+        declarationStorage.enterScope(irClass.wrappedDescriptor)
         conversionScope.withClass(irClass) {
             val primaryConstructor = klass.getPrimaryConstructorIfAny()
             val irPrimaryConstructor = primaryConstructor?.let { declarationStorage.getCachedIrConstructor(it)!! }
             if (irPrimaryConstructor != null) {
                 with(declarationStorage) {
-                    enterScope(irPrimaryConstructor.descriptor)
+                    enterScope(irPrimaryConstructor.wrappedDescriptor)
                     irPrimaryConstructor.valueParameters.forEach { symbolTable.introduceValueParameter(it) }
                     irPrimaryConstructor.putParametersInScope(primaryConstructor)
                     convertFunctionContent(irPrimaryConstructor, primaryConstructor)
@@ -92,14 +92,14 @@ internal class ClassMemberGenerator(
             }
             annotationGenerator.generate(irClass, klass)
             if (irPrimaryConstructor != null) {
-                declarationStorage.leaveScope(irPrimaryConstructor.descriptor)
+                declarationStorage.leaveScope(irPrimaryConstructor.wrappedDescriptor)
             }
         }
-        declarationStorage.leaveScope(irClass.descriptor)
+        declarationStorage.leaveScope(irClass.wrappedDescriptor)
     }
 
     fun <T : IrFunction> convertFunctionContent(irFunction: T, firFunction: FirFunction<*>?): T {
-        val descriptor = irFunction.descriptor
+        val descriptor = irFunction.wrappedDescriptor
         conversionScope.withParent(irFunction) {
             if (firFunction != null) {
                 if (irFunction !is IrConstructor || !irFunction.isPrimary) {
@@ -167,7 +167,7 @@ internal class ClassMemberGenerator(
     }
 
     fun convertPropertyContent(irProperty: IrProperty, property: FirProperty): IrProperty {
-        val descriptor = irProperty.descriptor
+        val descriptor = irProperty.wrappedDescriptor
         val initializer = property.initializer
         val delegate = property.delegate
         val propertyType = property.returnTypeRef.toIrType()
@@ -213,9 +213,9 @@ internal class ClassMemberGenerator(
             convertFunctionContent(this, propertyAccessor)
             if (isDefault) {
                 conversionScope.withParent(this) {
-                    declarationStorage.enterScope(descriptor)
+                    declarationStorage.enterScope(wrappedDescriptor)
                     val backingField = correspondingProperty.backingField
-                    val fieldSymbol = symbolTable.referenceField(correspondingProperty.descriptor)
+                    val fieldSymbol = symbolTable.referenceField(correspondingProperty.wrappedDescriptor)
                     val declaration = this
                     if (backingField != null) {
                         body = IrBlockBodyImpl(
@@ -235,7 +235,7 @@ internal class ClassMemberGenerator(
                             )
                         )
                     }
-                    declarationStorage.leaveScope(descriptor)
+                    declarationStorage.leaveScope(wrappedDescriptor)
                 }
             }
         }

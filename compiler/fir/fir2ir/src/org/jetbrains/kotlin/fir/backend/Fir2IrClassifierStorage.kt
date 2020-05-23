@@ -65,7 +65,7 @@ class Fir2IrClassifierStorage(
     }
 
     private fun IrClass.setThisReceiver(typeParameters: List<FirTypeParameterRef>) {
-        symbolTable.enterScope(descriptor)
+        symbolTable.enterScope(wrappedDescriptor)
         val typeArguments = typeParameters.map {
             IrSimpleTypeImpl(getCachedIrTypeParameter(it.symbol.fir)!!.symbol, false, emptyList(), emptyList())
         }
@@ -74,7 +74,7 @@ class Fir2IrClassifierStorage(
             thisType = IrSimpleTypeImpl(symbol, false, typeArguments, emptyList()),
             thisOrigin = IrDeclarationOrigin.INSTANCE_RECEIVER
         )
-        symbolTable.leaveScope(descriptor)
+        symbolTable.leaveScope(wrappedDescriptor)
     }
 
     internal fun preCacheTypeParameters(owner: FirTypeParameterRefsOwner) {

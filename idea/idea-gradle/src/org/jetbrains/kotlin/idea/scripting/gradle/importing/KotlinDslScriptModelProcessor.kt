@@ -7,7 +7,6 @@ package org.jetbrains.kotlin.idea.scripting.gradle.importing
 
 import com.intellij.openapi.externalSystem.model.task.ExternalSystemTaskId
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.util.Key
 import com.intellij.openapi.util.io.FileUtil.toSystemIndependentName
 import com.intellij.openapi.vfs.VfsUtil
 import org.gradle.tooling.model.kotlin.dsl.EditorReportSeverity
@@ -16,10 +15,25 @@ import org.jetbrains.kotlin.gradle.BrokenKotlinDslScriptsModel
 import org.jetbrains.kotlin.idea.KotlinIdeaGradleBundle
 import org.jetbrains.kotlin.idea.scripting.gradle.getGradleScriptInputsStamp
 import org.jetbrains.kotlin.idea.scripting.gradle.roots.GradleBuildRootsManager
-import org.jetbrains.kotlin.psi.NotNullableUserDataProperty
+import org.jetbrains.plugins.gradle.model.BuildScriptClasspathModel
 import org.jetbrains.plugins.gradle.service.project.ProjectResolverContext
 import java.io.File
-import java.util.concurrent.ConcurrentHashMap
+
+fun saveGradleBuildEnvironment(resolverCtx: ProjectResolverContext) {
+    val task = resolverCtx.externalSystemTaskId
+    val tasks = KotlinDslSyncListener.instance.tasks
+    val sync = synchronized(tasks) { tasks[task] }
+    if (sync != null) {
+        val gradleHomeDir = resolverCtx.models.getModel(BuildScriptClasspathModel::class.java)?.gradleHomeDir
+        synchronized(sync) {
+            sync.gradleVersion = resolverCtx.projectGradleVersion
+
+            if (gradleHomeDir != null) {
+                sync.gradleHome = toSystemIndependentName(gradleHomeDir.canonicalPath)
+            }
+        }
+    }
+}
 
 fun processScriptModel(
     resolverCtx: ProjectResolverContext,
@@ -103,6 +117,8 @@ private fun KotlinDslScriptsModel.toListOfScriptModels(project: Project): List<K
 class KotlinDslGradleBuildSync(val workingDir: String, val taskId: ExternalSystemTaskId) {
     val ts = System.currentTimeMillis()
     var project: Project? = null
+    var gradleVersion: String? = null
+    var gradleHome: String? = null
     val projectRoots = mutableSetOf<String>()
     val models = mutableListOf<KotlinDslScriptModel>()
     var failed = false

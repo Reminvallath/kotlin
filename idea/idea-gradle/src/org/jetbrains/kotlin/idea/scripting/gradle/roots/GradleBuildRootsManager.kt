@@ -29,6 +29,7 @@ import org.jetbrains.kotlin.idea.util.application.runReadAction
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.utils.addToStdlib.firstIsInstance
 import org.jetbrains.plugins.gradle.config.GradleSettingsListenerAdapter
+import org.jetbrains.plugins.gradle.service.GradleInstallationManager
 import org.jetbrains.plugins.gradle.settings.*
 import org.jetbrains.plugins.gradle.util.GradleConstants
 import java.io.File
@@ -115,7 +116,7 @@ class GradleBuildRootsManager(val project: Project) : GradleBuildRootsLocator(),
     }
 
     fun markImportingInProgress(workingDir: String, inProgress: Boolean = true) {
-        actualizeBuildRoot(workingDir)?.importing = inProgress
+        actualizeBuildRoot(workingDir, null)?.importing = inProgress
         updateNotifications { it.startsWith(workingDir) }
     }
 
@@ -127,13 +128,19 @@ class GradleBuildRootsManager(val project: Project) : GradleBuildRootsLocator(),
         }
 
         try {
-            val oldRoot = actualizeBuildRoot(sync.workingDir) ?: return
+            val oldRoot = actualizeBuildRoot(sync.workingDir, sync.gradleVersion) ?: return
             oldRoot.importing = false
 
             if (oldRoot is Legacy) return
 
-            val templateClasspath = GradleScriptDefinitionsContributor.getDefinitionsTemplateClasspath(project)
-            val newData = GradleBuildRootData(sync.ts, sync.projectRoots, templateClasspath, sync.models)
+            // TODO: can gradleHome be null, what to do in this case
+            val gradleHome = sync.gradleHome
+            if (gradleHome == null) {
+                scriptingInfoLog("Cannot find valid gradle home for ${sync.gradleHome} with version = ${sync.gradleVersion}, script models cannot be saved")
+                return
+            }
+
+            val newData = GradleBuildRootData(sync.ts, sync.projectRoots, gradleHome, sync.models)
             val mergedData = if (sync.failed && oldRoot is Imported) merge(oldRoot.data, newData) else newData
 
             val lastModifiedFilesReset = LastModifiedFiles()
@@ -157,7 +164,7 @@ class GradleBuildRootsManager(val project: Project) : GradleBuildRootsLocator(),
         val models = old.models.associateByTo(mutableMapOf()) { it.file }
         new.models.associateByTo(models) { it.file }
 
-        return GradleBuildRootData(new.importTs, roots, new.templateClasspath, models.values)
+        return GradleBuildRootData(new.importTs, roots, new.gradleHome, models.values)
     }
 
     private val lastModifiedFilesSaveScheduled = AtomicBoolean()
@@ -202,11 +209,12 @@ class GradleBuildRootsManager(val project: Project) : GradleBuildRootsLocator(),
             }
 
             override fun onGradleHomeChange(oldPath: String?, newPath: String?, linkedProjectPath: String) {
-                reloadBuildRoot(linkedProjectPath)
+                val version = GradleInstallationManager.getGradleVersion(newPath)
+                reloadBuildRoot(linkedProjectPath, version)
             }
 
             override fun onGradleDistributionTypeChange(currentValue: DistributionType?, linkedProjectPath: String) {
-                reloadBuildRoot(linkedProjectPath)
+                reloadBuildRoot(linkedProjectPath, null)
             }
         }
 
@@ -223,42 +231,48 @@ class GradleBuildRootsManager(val project: Project) : GradleBuildRootsLocator(),
      * Actually this should be true, but we may miss some change events.
      * For that cases we are rechecking this on each Gradle Project sync (importing/reimporting)
      */
-    private fun actualizeBuildRoot(workingDir: String): GradleBuildRoot? {
+    private fun actualizeBuildRoot(workingDir: String, gradleVersion: String?): GradleBuildRoot? {
         val actualSettings = getGradleProjectSettings(workingDir)
         val buildRoot = getBuildRootByWorkingDir(workingDir)
 
+        val version = gradleVersion ?: actualSettings?.resolveGradleVersion()?.version
         return when {
-            buildRoot != null -> when {
-                !buildRoot.checkActual(actualSettings) -> reloadBuildRoot(workingDir)
-                else -> buildRoot
+            buildRoot != null -> {
+                when {
+                    !buildRoot.checkActual(version) -> reloadBuildRoot(workingDir, version)
+                    else -> buildRoot
+                }
             }
-            actualSettings != null -> loadLinkedRoot(actualSettings)
+            actualSettings != null && version != null -> {
+                loadLinkedRoot(actualSettings, version)
+            }
             else -> null
         }
     }
 
-    private fun GradleBuildRoot.checkActual(actualSettings: GradleProjectSettings?): Boolean {
-        if (actualSettings == null) return false
+    private fun GradleBuildRoot.checkActual(version: String?): Boolean {
+        if (version == null) return false
 
         val knownAsSupported = this !is Legacy
-        val shouldBeSupported = kotlinDslScriptsModelImportSupported(actualSettings.resolveGradleVersion().version)
+        val shouldBeSupported = kotlinDslScriptsModelImportSupported(version)
         return knownAsSupported == shouldBeSupported
     }
 
-    private fun reloadBuildRoot(rootPath: String): GradleBuildRoot? {
+    private fun reloadBuildRoot(rootPath: String, version: String?): GradleBuildRoot? {
         val settings = getGradleProjectSettings(rootPath)
         if (settings == null) {
             remove(rootPath)
             return null
         } else {
-            val newRoot = loadLinkedRoot(settings)
+            val gradleVersion = version ?: settings.resolveGradleVersion().version
+            val newRoot = loadLinkedRoot(settings, gradleVersion)
             add(newRoot)
             return newRoot
         }
     }
 
-    private fun loadLinkedRoot(settings: GradleProjectSettings) =
-        tryLoadFromFsCache(settings) ?: createOtherLinkedRoot(settings)
+    private fun loadLinkedRoot(settings: GradleProjectSettings, version: String = settings.resolveGradleVersion().version) =
+        tryLoadFromFsCache(settings) ?: createOtherLinkedRoot(settings, version)
 
     private fun tryLoadFromFsCache(settings: GradleProjectSettings) =
         tryCreateImportedRoot(settings.externalProjectPath) {
@@ -272,8 +286,8 @@ class GradleBuildRootsManager(val project: Project) : GradleBuildRootsLocator(),
         settings: GradleProjectSettings
     ) = data.copy(projectRoots = data.projectRoots.toSet() + settings.modules)
 
-    private fun createOtherLinkedRoot(settings: GradleProjectSettings): GradleBuildRoot {
-        val supported = kotlinDslScriptsModelImportSupported(settings.resolveGradleVersion().version)
+    private fun createOtherLinkedRoot(settings: GradleProjectSettings, version: String): GradleBuildRoot {
+        val supported = kotlinDslScriptsModelImportSupported(version)
         return when {
             supported -> New(settings)
             else -> Legacy(settings)
@@ -287,6 +301,7 @@ class GradleBuildRootsManager(val project: Project) : GradleBuildRootsLocator(),
     ): Imported? {
         val buildRoot = VfsUtil.findFile(Paths.get(externalProjectPath), true) ?: return null
         val data = dataProvider(buildRoot) ?: return null
+        // TODO: can be outdated, should be taken from sync
         val javaHome = ExternalSystemApiUtil
             .getExecutionSettings<GradleExecutionSettings>(project, externalProjectPath, GradleConstants.SYSTEM_ID)
             .javaHome?.let { File(it) }

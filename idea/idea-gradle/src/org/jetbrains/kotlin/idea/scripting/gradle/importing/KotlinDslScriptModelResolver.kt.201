@@ -34,16 +34,18 @@ class KotlinDslScriptModelContributor : ProjectModelContributor {
     override fun accept(
         projectModelBuilder: ModifiableGradleProjectModel,
         toolingModelsProvider: ToolingModelsProvider,
-        resolverContext: ProjectResolverContext
+        resolverCtx: ProjectResolverContext
     ) {
-        if (!kotlinDslScriptsModelImportSupported(resolverContext.projectGradleVersion)) return
-
         toolingModelsProvider.projects().forEach {
             val projectIdentifier = it.projectIdentifier.projectPath
             if (projectIdentifier == ":") {
-                val model = toolingModelsProvider.getProjectModel(it, KotlinDslScriptsModel::class.java)
-                if (model != null) {
-                    processScriptModel(resolverContext, model, projectIdentifier)
+                saveGradleBuildEnvironment(resolverCtx)
+
+                if (kotlinDslScriptsModelImportSupported(resolverCtx.projectGradleVersion)) {
+                    val model = toolingModelsProvider.getProjectModel(it, KotlinDslScriptsModel::class.java)
+                    if (model != null) {
+                        processScriptModel(resolverCtx, model, projectIdentifier)
+                    }
                 }
             }
         }

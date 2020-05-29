@@ -46,7 +46,7 @@ class KotlinDslSyncListener : ExternalSystemTaskNotificationListenerAdapter() {
         val project = id.findProject() ?: return
 
         @Suppress("DEPRECATION")
-        ScriptDefinitionContributor.find<GradleScriptDefinitionsContributor>(project)?.reloadIfNecessary()
+        ScriptDefinitionContributor.find<GradleScriptDefinitionsContributor>(project)?.reloadIfNeeded(sync.workingDir, sync.gradleHome)
 
         saveScriptModels(project, sync)
     }

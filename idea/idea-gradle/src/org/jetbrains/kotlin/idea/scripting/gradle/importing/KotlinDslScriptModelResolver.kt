@@ -31,12 +31,10 @@ class KotlinDslScriptModelResolver : KotlinDslScriptModelResolverCommon() {
     override fun populateProjectExtraModels(gradleProject: IdeaProject, ideProject: DataNode<ProjectData>) {
         super.populateProjectExtraModels(gradleProject, ideProject)
 
-        if (kotlinDslScriptsModelImportSupported(resolverCtx.projectGradleVersion)) {
-            populateBuildModels(resolverCtx.models.mainBuild, ideProject)
+        populateBuildModels(resolverCtx.models.mainBuild, ideProject)
 
-            resolverCtx.models.includedBuilds.forEach { includedRoot ->
-                populateBuildModels(includedRoot, ideProject)
-            }
+        resolverCtx.models.includedBuilds.forEach { includedRoot ->
+            populateBuildModels(includedRoot, ideProject)
         }
     }
 
@@ -46,8 +44,12 @@ class KotlinDslScriptModelResolver : KotlinDslScriptModelResolverCommon() {
     ) {
         root.projects.forEach {
             if (it.projectIdentifier.projectPath == ":") {
-                resolverCtx.models.getModel(it, KotlinDslScriptsModel::class.java)?.let { model ->
-                    processScriptModel(resolverCtx, model, it.projectIdentifier.projectPath)
+                saveGradleBuildEnvironment(resolverCtx)
+
+                if (kotlinDslScriptsModelImportSupported(resolverCtx.projectGradleVersion)) {
+                    resolverCtx.models.getModel(it, KotlinDslScriptsModel::class.java)?.let { model ->
+                        processScriptModel(resolverCtx, model, it.projectIdentifier.projectPath)
+                    }
                 }
             }
         }

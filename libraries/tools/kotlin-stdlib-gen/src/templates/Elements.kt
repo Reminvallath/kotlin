@@ -909,8 +909,8 @@ object Elements : TemplateGroupBase() {
     val f_randomOrNull = fn("randomOrNull()") {
         include(Collections, ArraysOfObjects, ArraysOfPrimitives, ArraysOfUnsigned, CharSequences, RangesOfPrimitives)
     } builder {
-        since("1.3")
-        annotation("@ExperimentalStdlibApi")
+        since("1.4")
+        annotation("@WasExperimental(ExperimentalStdlibApi::class)")
         inlineOnly()
         returns("T?")
         doc {
@@ -971,8 +971,8 @@ object Elements : TemplateGroupBase() {
     val f_randomOrNull_random = fn("randomOrNull(random: Random)") {
         include(Collections, ArraysOfObjects, ArraysOfPrimitives, ArraysOfUnsigned, CharSequences, RangesOfPrimitives)
     } builder {
-        since("1.3")
-        annotation("@ExperimentalStdlibApi")
+        since("1.4")
+        annotation("@WasExperimental(ExperimentalStdlibApi::class)")
         returns("T?")
         doc {
             """

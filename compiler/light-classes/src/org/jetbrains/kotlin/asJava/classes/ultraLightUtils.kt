@@ -311,12 +311,6 @@ private fun packMethodFlags(access: Int, isInterface: Boolean): Int {
     return flags
 }
 
-internal fun KtModifierListOwner.isHiddenByDeprecation(support: KtUltraLightSupport): Boolean {
-    val jetModifierList = this.modifierList ?: return false
-    if (jetModifierList.annotationEntries.isEmpty()) return false
-    return support.isHiddenByDeprecation(this)
-}
-
 internal fun KtAnnotated.isJvmStatic(support: KtUltraLightSupport): Boolean =
     support.hasAnnotation(this, JVM_STATIC_ANNOTATION_FQ_NAME)
 

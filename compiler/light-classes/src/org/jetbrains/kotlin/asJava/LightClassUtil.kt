@@ -23,6 +23,7 @@ import com.intellij.psi.stubs.PsiFileStub
 import com.intellij.psi.stubs.StubElement
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.kotlin.asJava.classes.KtLightClass
+import org.jetbrains.kotlin.asJava.classes.KtUltraLightClass
 import org.jetbrains.kotlin.asJava.elements.*
 import org.jetbrains.kotlin.asJava.finder.JavaElementFinder
 import org.jetbrains.kotlin.fileClasses.javaFileFacadeFqName
@@ -128,10 +129,26 @@ object LightClassUtil {
         return getPsiMethodWrappers(declaration).firstOrNull()
     }
 
-    private fun getPsiMethodWrappers(declaration: KtDeclaration): Sequence<KtLightMethod> =
-            getWrappingClasses(declaration).flatMap { it.methods.asSequence() }
-                    .filterIsInstance<KtLightMethod>()
-                    .filter { it.kotlinOrigin === declaration }
+    private fun getPsiMethodWrappers(declaration: KtDeclaration): Sequence<KtLightMethod> {
+        val classes = getWrappingClasses(declaration)
+        if (declaration is KtProperty || declaration is KtParameter) {
+            for (clazz in classes) {
+                if (clazz is KtUltraLightClass) {
+                    val accessors = clazz.getAccessors(declaration) ?: continue
+                    return accessors.asSequence()
+                }
+            }
+        }
+        for (clazz in classes) {
+            // the first class with methods found should contain all methods with kotlinOrigin, so no need to look after
+            val methods = clazz.methods.toList()
+                .filterIsInstance<KtLightMethod>()
+                .filter { it.kotlinOrigin === declaration }
+            if (methods.isNotEmpty())
+                return methods.asSequence()
+        }
+        return emptySequence()
+    }
 
     private fun getWrappingClass(declaration: KtDeclaration): PsiClass? {
         if (declaration is KtParameter) {

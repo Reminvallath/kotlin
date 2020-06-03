@@ -60,7 +60,7 @@ class KtUltraLightClassForFacade(
         creator: UltraLightMembersCreator,
         result: MutableList<KtLightMethod>
     ) {
-        for (declaration in file.declarations.filterNot { it.isHiddenByDeprecation(support) }) {
+        for (declaration in file.declarations.filterNot { support.isHiddenByDeprecation(it) }) {
             when (declaration) {
                 is KtNamedFunction -> result.addAll(creator.createMethods(declaration, true))
                 is KtProperty -> {

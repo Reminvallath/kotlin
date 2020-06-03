@@ -95,7 +95,7 @@ class KtUltraLightClassForScript(
 
         result.addScriptDefaultMethods()
 
-        for (declaration in script.declarations.filterNot { it.isHiddenByDeprecation(support) }) {
+        for (declaration in script.declarations.filterNot { support.isHiddenByDeprecation(it) }) {
             when (declaration) {
                 is KtNamedFunction -> result.addAll(membersBuilder.createMethods(declaration, forceStatic = false))
                 is KtProperty -> result.addAll(

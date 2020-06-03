@@ -20497,6 +20497,7 @@ public inline fun CharArray.sumByDouble(selector: (Char) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfDouble")
 @kotlin.internal.InlineOnly
 public inline fun <T> Array<out T>.sumOf(selector: (T) -> Double): Double {
@@ -20513,6 +20514,7 @@ public inline fun <T> Array<out T>.sumOf(selector: (T) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfDouble")
 @kotlin.internal.InlineOnly
 public inline fun ByteArray.sumOf(selector: (Byte) -> Double): Double {
@@ -20529,6 +20531,7 @@ public inline fun ByteArray.sumOf(selector: (Byte) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfDouble")
 @kotlin.internal.InlineOnly
 public inline fun ShortArray.sumOf(selector: (Short) -> Double): Double {
@@ -20545,6 +20548,7 @@ public inline fun ShortArray.sumOf(selector: (Short) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfDouble")
 @kotlin.internal.InlineOnly
 public inline fun IntArray.sumOf(selector: (Int) -> Double): Double {
@@ -20561,6 +20565,7 @@ public inline fun IntArray.sumOf(selector: (Int) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfDouble")
 @kotlin.internal.InlineOnly
 public inline fun LongArray.sumOf(selector: (Long) -> Double): Double {
@@ -20577,6 +20582,7 @@ public inline fun LongArray.sumOf(selector: (Long) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfDouble")
 @kotlin.internal.InlineOnly
 public inline fun FloatArray.sumOf(selector: (Float) -> Double): Double {
@@ -20593,6 +20599,7 @@ public inline fun FloatArray.sumOf(selector: (Float) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfDouble")
 @kotlin.internal.InlineOnly
 public inline fun DoubleArray.sumOf(selector: (Double) -> Double): Double {
@@ -20609,6 +20616,7 @@ public inline fun DoubleArray.sumOf(selector: (Double) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfDouble")
 @kotlin.internal.InlineOnly
 public inline fun BooleanArray.sumOf(selector: (Boolean) -> Double): Double {
@@ -20625,6 +20633,7 @@ public inline fun BooleanArray.sumOf(selector: (Boolean) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfDouble")
 @kotlin.internal.InlineOnly
 public inline fun CharArray.sumOf(selector: (Char) -> Double): Double {
@@ -20641,6 +20650,7 @@ public inline fun CharArray.sumOf(selector: (Char) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfInt")
 @kotlin.internal.InlineOnly
 public inline fun <T> Array<out T>.sumOf(selector: (T) -> Int): Int {
@@ -20657,6 +20667,7 @@ public inline fun <T> Array<out T>.sumOf(selector: (T) -> Int): Int {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfInt")
 @kotlin.internal.InlineOnly
 public inline fun ByteArray.sumOf(selector: (Byte) -> Int): Int {
@@ -20673,6 +20684,7 @@ public inline fun ByteArray.sumOf(selector: (Byte) -> Int): Int {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfInt")
 @kotlin.internal.InlineOnly
 public inline fun ShortArray.sumOf(selector: (Short) -> Int): Int {
@@ -20689,6 +20701,7 @@ public inline fun ShortArray.sumOf(selector: (Short) -> Int): Int {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfInt")
 @kotlin.internal.InlineOnly
 public inline fun IntArray.sumOf(selector: (Int) -> Int): Int {
@@ -20705,6 +20718,7 @@ public inline fun IntArray.sumOf(selector: (Int) -> Int): Int {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfInt")
 @kotlin.internal.InlineOnly
 public inline fun LongArray.sumOf(selector: (Long) -> Int): Int {
@@ -20721,6 +20735,7 @@ public inline fun LongArray.sumOf(selector: (Long) -> Int): Int {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfInt")
 @kotlin.internal.InlineOnly
 public inline fun FloatArray.sumOf(selector: (Float) -> Int): Int {
@@ -20737,6 +20752,7 @@ public inline fun FloatArray.sumOf(selector: (Float) -> Int): Int {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfInt")
 @kotlin.internal.InlineOnly
 public inline fun DoubleArray.sumOf(selector: (Double) -> Int): Int {
@@ -20753,6 +20769,7 @@ public inline fun DoubleArray.sumOf(selector: (Double) -> Int): Int {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfInt")
 @kotlin.internal.InlineOnly
 public inline fun BooleanArray.sumOf(selector: (Boolean) -> Int): Int {
@@ -20769,6 +20786,7 @@ public inline fun BooleanArray.sumOf(selector: (Boolean) -> Int): Int {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfInt")
 @kotlin.internal.InlineOnly
 public inline fun CharArray.sumOf(selector: (Char) -> Int): Int {
@@ -20785,6 +20803,7 @@ public inline fun CharArray.sumOf(selector: (Char) -> Int): Int {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfLong")
 @kotlin.internal.InlineOnly
 public inline fun <T> Array<out T>.sumOf(selector: (T) -> Long): Long {
@@ -20801,6 +20820,7 @@ public inline fun <T> Array<out T>.sumOf(selector: (T) -> Long): Long {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfLong")
 @kotlin.internal.InlineOnly
 public inline fun ByteArray.sumOf(selector: (Byte) -> Long): Long {
@@ -20817,6 +20837,7 @@ public inline fun ByteArray.sumOf(selector: (Byte) -> Long): Long {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfLong")
 @kotlin.internal.InlineOnly
 public inline fun ShortArray.sumOf(selector: (Short) -> Long): Long {
@@ -20833,6 +20854,7 @@ public inline fun ShortArray.sumOf(selector: (Short) -> Long): Long {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfLong")
 @kotlin.internal.InlineOnly
 public inline fun IntArray.sumOf(selector: (Int) -> Long): Long {
@@ -20849,6 +20871,7 @@ public inline fun IntArray.sumOf(selector: (Int) -> Long): Long {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfLong")
 @kotlin.internal.InlineOnly
 public inline fun LongArray.sumOf(selector: (Long) -> Long): Long {
@@ -20865,6 +20888,7 @@ public inline fun LongArray.sumOf(selector: (Long) -> Long): Long {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfLong")
 @kotlin.internal.InlineOnly
 public inline fun FloatArray.sumOf(selector: (Float) -> Long): Long {
@@ -20881,6 +20905,7 @@ public inline fun FloatArray.sumOf(selector: (Float) -> Long): Long {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfLong")
 @kotlin.internal.InlineOnly
 public inline fun DoubleArray.sumOf(selector: (Double) -> Long): Long {
@@ -20897,6 +20922,7 @@ public inline fun DoubleArray.sumOf(selector: (Double) -> Long): Long {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfLong")
 @kotlin.internal.InlineOnly
 public inline fun BooleanArray.sumOf(selector: (Boolean) -> Long): Long {
@@ -20913,6 +20939,7 @@ public inline fun BooleanArray.sumOf(selector: (Boolean) -> Long): Long {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfLong")
 @kotlin.internal.InlineOnly
 public inline fun CharArray.sumOf(selector: (Char) -> Long): Long {
@@ -20929,6 +20956,7 @@ public inline fun CharArray.sumOf(selector: (Char) -> Long): Long {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfUInt")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -20946,6 +20974,7 @@ public inline fun <T> Array<out T>.sumOf(selector: (T) -> UInt): UInt {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfUInt")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -20963,6 +20992,7 @@ public inline fun ByteArray.sumOf(selector: (Byte) -> UInt): UInt {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfUInt")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -20980,6 +21010,7 @@ public inline fun ShortArray.sumOf(selector: (Short) -> UInt): UInt {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfUInt")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -20997,6 +21028,7 @@ public inline fun IntArray.sumOf(selector: (Int) -> UInt): UInt {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfUInt")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -21014,6 +21046,7 @@ public inline fun LongArray.sumOf(selector: (Long) -> UInt): UInt {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfUInt")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -21031,6 +21064,7 @@ public inline fun FloatArray.sumOf(selector: (Float) -> UInt): UInt {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfUInt")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -21048,6 +21082,7 @@ public inline fun DoubleArray.sumOf(selector: (Double) -> UInt): UInt {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfUInt")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -21065,6 +21100,7 @@ public inline fun BooleanArray.sumOf(selector: (Boolean) -> UInt): UInt {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfUInt")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -21082,6 +21118,7 @@ public inline fun CharArray.sumOf(selector: (Char) -> UInt): UInt {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfULong")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -21099,6 +21136,7 @@ public inline fun <T> Array<out T>.sumOf(selector: (T) -> ULong): ULong {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfULong")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -21116,6 +21154,7 @@ public inline fun ByteArray.sumOf(selector: (Byte) -> ULong): ULong {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfULong")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -21133,6 +21172,7 @@ public inline fun ShortArray.sumOf(selector: (Short) -> ULong): ULong {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfULong")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -21150,6 +21190,7 @@ public inline fun IntArray.sumOf(selector: (Int) -> ULong): ULong {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfULong")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -21167,6 +21208,7 @@ public inline fun LongArray.sumOf(selector: (Long) -> ULong): ULong {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfULong")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -21184,6 +21226,7 @@ public inline fun FloatArray.sumOf(selector: (Float) -> ULong): ULong {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfULong")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -21201,6 +21244,7 @@ public inline fun DoubleArray.sumOf(selector: (Double) -> ULong): ULong {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfULong")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -21218,6 +21262,7 @@ public inline fun BooleanArray.sumOf(selector: (Boolean) -> ULong): ULong {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfULong")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly

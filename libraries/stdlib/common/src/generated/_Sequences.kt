@@ -2094,6 +2094,7 @@ public inline fun <T> Sequence<T>.sumByDouble(selector: (T) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfDouble")
 @kotlin.internal.InlineOnly
 public inline fun <T> Sequence<T>.sumOf(selector: (T) -> Double): Double {
@@ -2112,6 +2113,7 @@ public inline fun <T> Sequence<T>.sumOf(selector: (T) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfInt")
 @kotlin.internal.InlineOnly
 public inline fun <T> Sequence<T>.sumOf(selector: (T) -> Int): Int {
@@ -2130,6 +2132,7 @@ public inline fun <T> Sequence<T>.sumOf(selector: (T) -> Int): Int {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfLong")
 @kotlin.internal.InlineOnly
 public inline fun <T> Sequence<T>.sumOf(selector: (T) -> Long): Long {
@@ -2148,6 +2151,7 @@ public inline fun <T> Sequence<T>.sumOf(selector: (T) -> Long): Long {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfUInt")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -2167,6 +2171,7 @@ public inline fun <T> Sequence<T>.sumOf(selector: (T) -> UInt): UInt {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfULong")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly

@@ -37,6 +37,7 @@ public fun CharSequence.toSortedSet(): java.util.SortedSet<Char> {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigDecimal")
 @kotlin.internal.InlineOnly
 public inline fun CharSequence.sumOf(selector: (Char) -> java.math.BigDecimal): java.math.BigDecimal {
@@ -53,6 +54,7 @@ public inline fun CharSequence.sumOf(selector: (Char) -> java.math.BigDecimal): 
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigInteger")
 @kotlin.internal.InlineOnly
 public inline fun CharSequence.sumOf(selector: (Char) -> java.math.BigInteger): java.math.BigInteger {

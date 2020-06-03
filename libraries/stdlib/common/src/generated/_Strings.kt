@@ -1909,6 +1909,7 @@ public inline fun CharSequence.sumByDouble(selector: (Char) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfDouble")
 @kotlin.internal.InlineOnly
 public inline fun CharSequence.sumOf(selector: (Char) -> Double): Double {
@@ -1925,6 +1926,7 @@ public inline fun CharSequence.sumOf(selector: (Char) -> Double): Double {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfInt")
 @kotlin.internal.InlineOnly
 public inline fun CharSequence.sumOf(selector: (Char) -> Int): Int {
@@ -1941,6 +1943,7 @@ public inline fun CharSequence.sumOf(selector: (Char) -> Int): Int {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfLong")
 @kotlin.internal.InlineOnly
 public inline fun CharSequence.sumOf(selector: (Char) -> Long): Long {
@@ -1957,6 +1960,7 @@ public inline fun CharSequence.sumOf(selector: (Char) -> Long): Long {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfUInt")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly
@@ -1974,6 +1978,7 @@ public inline fun CharSequence.sumOf(selector: (Char) -> UInt): UInt {
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfULong")
 @ExperimentalUnsignedTypes
 @kotlin.internal.InlineOnly

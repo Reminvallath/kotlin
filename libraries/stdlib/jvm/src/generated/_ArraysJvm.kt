@@ -2708,6 +2708,7 @@ public fun <T> Array<out T>.toSortedSet(comparator: Comparator<in T>): java.util
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigDecimal")
 @kotlin.internal.InlineOnly
 public inline fun <T> Array<out T>.sumOf(selector: (T) -> java.math.BigDecimal): java.math.BigDecimal {
@@ -2724,6 +2725,7 @@ public inline fun <T> Array<out T>.sumOf(selector: (T) -> java.math.BigDecimal):
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigDecimal")
 @kotlin.internal.InlineOnly
 public inline fun ByteArray.sumOf(selector: (Byte) -> java.math.BigDecimal): java.math.BigDecimal {
@@ -2740,6 +2742,7 @@ public inline fun ByteArray.sumOf(selector: (Byte) -> java.math.BigDecimal): jav
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigDecimal")
 @kotlin.internal.InlineOnly
 public inline fun ShortArray.sumOf(selector: (Short) -> java.math.BigDecimal): java.math.BigDecimal {
@@ -2756,6 +2759,7 @@ public inline fun ShortArray.sumOf(selector: (Short) -> java.math.BigDecimal): j
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigDecimal")
 @kotlin.internal.InlineOnly
 public inline fun IntArray.sumOf(selector: (Int) -> java.math.BigDecimal): java.math.BigDecimal {
@@ -2772,6 +2776,7 @@ public inline fun IntArray.sumOf(selector: (Int) -> java.math.BigDecimal): java.
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigDecimal")
 @kotlin.internal.InlineOnly
 public inline fun LongArray.sumOf(selector: (Long) -> java.math.BigDecimal): java.math.BigDecimal {
@@ -2788,6 +2793,7 @@ public inline fun LongArray.sumOf(selector: (Long) -> java.math.BigDecimal): jav
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigDecimal")
 @kotlin.internal.InlineOnly
 public inline fun FloatArray.sumOf(selector: (Float) -> java.math.BigDecimal): java.math.BigDecimal {
@@ -2804,6 +2810,7 @@ public inline fun FloatArray.sumOf(selector: (Float) -> java.math.BigDecimal): j
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigDecimal")
 @kotlin.internal.InlineOnly
 public inline fun DoubleArray.sumOf(selector: (Double) -> java.math.BigDecimal): java.math.BigDecimal {
@@ -2820,6 +2827,7 @@ public inline fun DoubleArray.sumOf(selector: (Double) -> java.math.BigDecimal):
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigDecimal")
 @kotlin.internal.InlineOnly
 public inline fun BooleanArray.sumOf(selector: (Boolean) -> java.math.BigDecimal): java.math.BigDecimal {
@@ -2836,6 +2844,7 @@ public inline fun BooleanArray.sumOf(selector: (Boolean) -> java.math.BigDecimal
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigDecimal")
 @kotlin.internal.InlineOnly
 public inline fun CharArray.sumOf(selector: (Char) -> java.math.BigDecimal): java.math.BigDecimal {
@@ -2852,6 +2861,7 @@ public inline fun CharArray.sumOf(selector: (Char) -> java.math.BigDecimal): jav
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigInteger")
 @kotlin.internal.InlineOnly
 public inline fun <T> Array<out T>.sumOf(selector: (T) -> java.math.BigInteger): java.math.BigInteger {
@@ -2868,6 +2878,7 @@ public inline fun <T> Array<out T>.sumOf(selector: (T) -> java.math.BigInteger):
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigInteger")
 @kotlin.internal.InlineOnly
 public inline fun ByteArray.sumOf(selector: (Byte) -> java.math.BigInteger): java.math.BigInteger {
@@ -2884,6 +2895,7 @@ public inline fun ByteArray.sumOf(selector: (Byte) -> java.math.BigInteger): jav
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigInteger")
 @kotlin.internal.InlineOnly
 public inline fun ShortArray.sumOf(selector: (Short) -> java.math.BigInteger): java.math.BigInteger {
@@ -2900,6 +2912,7 @@ public inline fun ShortArray.sumOf(selector: (Short) -> java.math.BigInteger): j
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigInteger")
 @kotlin.internal.InlineOnly
 public inline fun IntArray.sumOf(selector: (Int) -> java.math.BigInteger): java.math.BigInteger {
@@ -2916,6 +2929,7 @@ public inline fun IntArray.sumOf(selector: (Int) -> java.math.BigInteger): java.
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigInteger")
 @kotlin.internal.InlineOnly
 public inline fun LongArray.sumOf(selector: (Long) -> java.math.BigInteger): java.math.BigInteger {
@@ -2932,6 +2946,7 @@ public inline fun LongArray.sumOf(selector: (Long) -> java.math.BigInteger): jav
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigInteger")
 @kotlin.internal.InlineOnly
 public inline fun FloatArray.sumOf(selector: (Float) -> java.math.BigInteger): java.math.BigInteger {
@@ -2948,6 +2963,7 @@ public inline fun FloatArray.sumOf(selector: (Float) -> java.math.BigInteger): j
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigInteger")
 @kotlin.internal.InlineOnly
 public inline fun DoubleArray.sumOf(selector: (Double) -> java.math.BigInteger): java.math.BigInteger {
@@ -2964,6 +2980,7 @@ public inline fun DoubleArray.sumOf(selector: (Double) -> java.math.BigInteger):
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigInteger")
 @kotlin.internal.InlineOnly
 public inline fun BooleanArray.sumOf(selector: (Boolean) -> java.math.BigInteger): java.math.BigInteger {
@@ -2980,6 +2997,7 @@ public inline fun BooleanArray.sumOf(selector: (Boolean) -> java.math.BigInteger
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigInteger")
 @kotlin.internal.InlineOnly
 public inline fun CharArray.sumOf(selector: (Char) -> java.math.BigInteger): java.math.BigInteger {

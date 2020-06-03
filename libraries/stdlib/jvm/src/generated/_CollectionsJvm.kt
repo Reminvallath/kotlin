@@ -61,6 +61,7 @@ public fun <T> Iterable<T>.toSortedSet(comparator: Comparator<in T>): java.util.
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigDecimal")
 @kotlin.internal.InlineOnly
 public inline fun <T> Iterable<T>.sumOf(selector: (T) -> java.math.BigDecimal): java.math.BigDecimal {
@@ -77,6 +78,7 @@ public inline fun <T> Iterable<T>.sumOf(selector: (T) -> java.math.BigDecimal): 
 @SinceKotlin("1.4")
 @OptIn(kotlin.experimental.ExperimentalTypeInference::class)
 @OverloadResolutionByLambdaReturnType
+@Suppress("INAPPLICABLE_JVM_NAME")
 @kotlin.jvm.JvmName("sumOfBigInteger")
 @kotlin.internal.InlineOnly
 public inline fun <T> Iterable<T>.sumOf(selector: (T) -> java.math.BigInteger): java.math.BigInteger {

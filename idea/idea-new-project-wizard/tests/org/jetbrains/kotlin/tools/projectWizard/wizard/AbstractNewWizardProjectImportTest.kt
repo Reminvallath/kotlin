@@ -7,6 +7,7 @@ package org.jetbrains.kotlin.tools.projectWizard.wizard
 
 import com.intellij.openapi.application.impl.ApplicationInfoImpl
 import com.intellij.openapi.externalSystem.util.ExternalSystemApiUtil
+import com.intellij.openapi.projectRoots.JavaSdk
 import com.intellij.openapi.projectRoots.ProjectJdkTable
 import com.intellij.openapi.projectRoots.SimpleJavaSdkType
 import com.intellij.testFramework.IdeaTestUtil
@@ -40,8 +41,9 @@ abstract class AbstractNewWizardProjectImportTest : PlatformTestCase() {
     override fun setUp() {
         super.setUp()
         runWriteAction {
-            val sdk = SimpleJavaSdkType().createJdk(SDK_NAME, IdeaTestUtil.requireRealJdkHome())
-            PluginTestCaseBase.addJdk(testRootDisposable, { sdk })
+            PluginTestCaseBase.addJdk(testRootDisposable) {
+                JavaSdk.getInstance().createJdk(SDK_NAME, IdeaTestUtil.requireRealJdkHome())
+            }
         }
         sdkCreationChecker = KotlinSdkCreationChecker()
     }
@@ -77,6 +79,14 @@ abstract class AbstractNewWizardProjectImportTest : PlatformTestCase() {
             prepareGradleBuildSystem(tempDirectory)
         }
 
+        runWizard(directory, buildSystem, tempDirectory)
+    }
+
+    protected fun runWizard(
+        directory: Path,
+        buildSystem: BuildSystem,
+        tempDirectory: Path
+    ) {
         val wizard = createWizard(directory, buildSystem, tempDirectory)
 
         val projectDependentServices =
@@ -86,7 +96,10 @@ abstract class AbstractNewWizardProjectImportTest : PlatformTestCase() {
         wizard.apply(projectDependentServices, GenerationPhase.ALL).assertSuccess()
     }
 
-    private fun prepareGradleBuildSystem(directory: Path) {
+    protected fun prepareGradleBuildSystem(
+        directory: Path,
+        distributionTypeSettings: DistributionType = DistributionType.WRAPPED
+    ) {
         com.intellij.openapi.components.ServiceManager.getService(project, GradleSettings::class.java)?.apply {
             isOfflineWork = GradleEnvironment.Headless.GRADLE_OFFLINE?.toBoolean() ?: isOfflineWork
             serviceDirectoryPath = GradleEnvironment.Headless.GRADLE_SERVICE_DIRECTORY ?: serviceDirectoryPath
@@ -99,7 +112,7 @@ abstract class AbstractNewWizardProjectImportTest : PlatformTestCase() {
                 isUseAutoImport = false
                 isUseQualifiedModuleNames = true
                 gradleJvm = SDK_NAME
-                distributionType = DistributionType.WRAPPED
+                distributionType = distributionTypeSettings
             }
             ExternalSystemApiUtil.getSettings(project, GradleConstants.SYSTEM_ID).linkProject(settings)
         }

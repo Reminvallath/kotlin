@@ -151,6 +151,7 @@ internal fun KtDeclaration.getKotlinType(): KotlinType? {
 
 internal fun KtDeclaration.resolve() = LightClassGenerationSupport.getInstance(project).resolveToDescriptor(this)
 internal fun KtElement.analyze() = LightClassGenerationSupport.getInstance(project).analyze(this)
+internal fun KtDeclaration.analyzeToDescriptor() = LightClassGenerationSupport.getInstance(project).analyzeToDescriptor(this)
 
 // copy-pasted from kotlinInternalUastUtils.kt and post-processed
 internal fun KotlinType.asPsiType(
@@ -313,13 +314,11 @@ private fun packMethodFlags(access: Int, isInterface: Boolean): Int {
 internal fun KtModifierListOwner.isHiddenByDeprecation(support: KtUltraLightSupport): Boolean {
     val jetModifierList = this.modifierList ?: return false
     if (jetModifierList.annotationEntries.isEmpty()) return false
-
-    val deprecated = support.findAnnotation(this, KotlinBuiltIns.FQ_NAMES.deprecated)?.second
-    return (deprecated?.argumentValue("level") as? EnumValue)?.enumEntryName?.asString() == "HIDDEN"
+    return support.isHiddenByDeprecation(this)
 }
 
 internal fun KtAnnotated.isJvmStatic(support: KtUltraLightSupport): Boolean =
-    support.findAnnotation(this, JVM_STATIC_ANNOTATION_FQ_NAME) !== null
+    support.hasAnnotation(this, JVM_STATIC_ANNOTATION_FQ_NAME)
 
 internal fun KtDeclaration.simpleVisibility(): String = when {
     hasModifier(KtTokens.PRIVATE_KEYWORD) -> PsiModifier.PRIVATE
@@ -346,7 +345,7 @@ internal fun KtModifierListOwner.isDeprecated(support: KtUltraLightSupport? = nu
         if (deprecatedName == fqName.asString()) return true
     }
 
-    return support?.findAnnotation(this, KotlinBuiltIns.FQ_NAMES.deprecated) !== null
+    return support?.hasAnnotation(this, KotlinBuiltIns.FQ_NAMES.deprecated) ?: false
 }
 
 private fun toQualifiedName(userType: KtUserType): FqName? {

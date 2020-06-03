@@ -42,6 +42,8 @@ abstract class LightClassGenerationSupport {
 
     abstract fun analyze(element: KtElement): BindingContext
 
+    abstract fun analyzeToDescriptor(declaration: KtDeclaration): DeclarationDescriptor?
+
     abstract fun analyzeWithContent(element: KtClassOrObject): BindingContext
 
     abstract fun createUltraLightClass(element: KtClassOrObject): KtUltraLightClass?

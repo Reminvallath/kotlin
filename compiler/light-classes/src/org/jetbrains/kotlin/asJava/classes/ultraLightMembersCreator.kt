@@ -108,9 +108,9 @@ internal class UltraLightMembersCreator(
         forcePrivate: Boolean = false
     ): Collection<KtLightMethod> {
 
-        if (ktFunction.hasAnnotation(JVM_SYNTHETIC_ANNOTATION_FQ_NAME) ||
-            ktFunction.hasReifiedParameters() ||
-            ktFunction.hasExpectModifier()
+        if (ktFunction.hasExpectModifier()
+            || ktFunction.hasReifiedParameters()
+            || ktFunction.hasAnnotation(JVM_SYNTHETIC_ANNOTATION_FQ_NAME)
         ) return emptyList()
 
 
@@ -237,7 +237,7 @@ internal class UltraLightMembersCreator(
         ) return PsiType.VOID
 
         val desc =
-            ktDeclaration.resolve()?.getterIfProperty() as? FunctionDescriptor
+            ktDeclaration.analyzeToDescriptor()?.getterIfProperty() as? FunctionDescriptor
                 ?: return PsiType.NULL
 
         return support.mapType(wrapper) { typeMapper, signatureWriter ->
@@ -386,7 +386,7 @@ internal class UltraLightMembersCreator(
         return isInternalNonPublishedApi(containingProperty)
     }
 
-    private fun KtAnnotated.hasAnnotation(name: FqName) = support.findAnnotation(this, name) != null
+    private fun KtAnnotated.hasAnnotation(name: FqName) = support.hasAnnotation(this, name)
 
     private fun isInternal(f: KtDeclaration): Boolean {
         if (f.hasModifier(OVERRIDE_KEYWORD)) {

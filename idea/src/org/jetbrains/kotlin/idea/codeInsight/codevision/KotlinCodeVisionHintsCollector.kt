@@ -57,8 +57,8 @@ class KotlinCodeVisionHintsCollector(
             if (element is KtClass) {
                 ReferencesSearch.search(element).forEach(countingProcessor)
             } else {
-                element.toPossiblyFakeLightMethods().first() // inline methods don't have light analogues (fake needed)
-                    .let { MethodReferencesSearch.search(it).forEach(countingProcessor) }
+                element.toPossiblyFakeLightMethods().firstOrNull() // inline methods don't have light analogues (fake needed)
+                    ?.let { MethodReferencesSearch.search(it).forEach(countingProcessor) }
             }
 
             val (usagesNum, limitReached) = countingProcessor

@@ -174,16 +174,13 @@ private class InterfaceDefaultCallsLowering(val context: JvmBackendContext) : Ir
 internal fun IrSimpleFunction.isDefinitelyNotDefaultImplsMethod(
     jvmDefaultMode: JvmDefaultMode,
     implementation: IrSimpleFunction? = resolveFakeOverride()
-): Boolean {
-    if (implementation == null ||
-        implementation.origin == IrDeclarationOrigin.IR_EXTERNAL_JAVA_DECLARATION_STUB ||
-        implementation.isCompiledToJvmDefault(jvmDefaultMode)
-    ) return true
-
-    return origin == IrDeclarationOrigin.FUNCTION_FOR_DEFAULT_PARAMETER ||
+): Boolean =
+    implementation == null ||
+            implementation.origin == IrDeclarationOrigin.IR_EXTERNAL_JAVA_DECLARATION_STUB ||
+            implementation.isCompiledToJvmDefault(jvmDefaultMode) ||
+            origin == IrDeclarationOrigin.FUNCTION_FOR_DEFAULT_PARAMETER ||
             hasAnnotation(PLATFORM_DEPENDENT_ANNOTATION_FQ_NAME) ||
             isCloneableClone()
-}
 
 private fun IrSimpleFunction.isCloneableClone(): Boolean =
     name.asString() == "clone" &&

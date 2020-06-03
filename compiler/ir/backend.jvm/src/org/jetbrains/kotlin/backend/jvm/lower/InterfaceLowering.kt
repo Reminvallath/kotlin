@@ -112,11 +112,10 @@ internal class InterfaceLowering(val context: JvmBackendContext) : IrElementTran
                                 defaultImpl.bridgeToStatic(it)
                             }
                         }
-                        jvmDefaultMode.isCompatibility -> {
+                        jvmDefaultMode.isCompatibility && implementation.isCompiledToJvmDefault(jvmDefaultMode) -> {
                             val defaultImpl = createDefaultImpl(function)
                             defaultImpl.bridgeViaAccessorTo(function)
                         }
-                        // else -> Do nothing.
                     }
                 }
 

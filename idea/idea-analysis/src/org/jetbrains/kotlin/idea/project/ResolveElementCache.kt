@@ -273,6 +273,9 @@ class ResolveElementCache(
     }
 
     private fun findElementOfAdditionalResolve(element: KtElement): KtElement? {
+        if (element is KtAnnotationEntry)
+            return element
+
         val elementOfAdditionalResolve = KtPsiUtil.getTopmostParentOfTypes(
             element,
             KtNamedFunction::class.java,

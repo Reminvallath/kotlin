@@ -71,7 +71,9 @@ sealed class ConeKotlinType : ConeKotlinTypeProjection(),
     abstract override fun hashCode(): Int
 }
 
-sealed class ConeSimpleKotlinType : ConeKotlinType(), SimpleTypeMarker
+sealed class ConeSimpleKotlinType : ConeKotlinType(), SimpleTypeMarker {
+
+}
 
 sealed class ConeKotlinTypeProjection : ConeTypeProjection() {
     abstract val type: ConeKotlinType
